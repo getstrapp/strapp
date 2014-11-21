@@ -5,12 +5,17 @@ Let's make app creation easier
 
 
 npm install -g strapp
+
+strapp install movies-phpmysql
+
+strapp update
+
 strapp
 
 strapp.json
 {
-  title: "Movie App",
-  stack: "LAMP",
+  title: "movies-phpmysql",
+  version: "1.0",
   models: [ {
     movie: {
       definition: "movie.json",
