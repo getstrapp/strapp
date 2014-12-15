@@ -1,0 +1,29 @@
+{
+  "name": "strapp",
+  "version": "0.0.1",
+  "description": "Let's make app creation easier",
+  "main": "strapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getstrapp/strapp"
+  },
+  "keywords": [
+    "strapp",
+    "app"
+  ],
+  "author": "Matt Froese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/getstrapp/strapp/issues"
+  },
+  "homepage": "https://github.com/getstrapp/strapp",
+  "dependencies": {
+    "colors": "^1.0.3",
+    "async": "*",
+    "handlebars": "*",
+    "underscore": "*"
+  }
+}
