@@ -53,7 +53,7 @@ CREATE TABLE <%= _name %>
 
 Usage:
 ```js
-var Strapp = require("../strapp.js");
+var Strapp = require("strapp");
 
 Strapp.apply("definition.json", [{ 
     src: "bootstrap.form.html",
