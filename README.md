@@ -1,7 +1,7 @@
 strapp
 ======
 
-[Imgur](http://i.imgur.com/AhjBvfg.png)
+![Strapp diagram](http://i.imgur.com/AhjBvfg.png)
 
 Strapp is simple. Strapp takes a definition of an object (json) then applies templates (using underscore template) to generate production ready code.
 
