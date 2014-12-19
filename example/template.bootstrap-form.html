@@ -1,0 +1,47 @@
+
+<fieldset>
+	<legend><%= _name %></legend>
+	<% _.each( properties, function( property, i ){ %>
+	<div class="form-group">
+		<label class="col-md-4 control-label" for="<%=property.name%>"><%=property.prettyname%></label>  
+		<div class="col-md-4">
+		<% if ( property.htmltype && property.htmltype == 'select' ) { %>
+		<select id="<%=property.name%>" name="<%=property.name%>" class="form-control">
+		<% _.each( property.options, function( opt, i ){ %>
+			<option value="<%= opt %>"><%= opt %></option>
+    	<% }); %>
+    	</select>
+		<% } else if( property.htmltype && property.htmltype == 'checkbox' ) { %>
+		<% _.each( property.options, function( opt, i ){ %>
+			<div class="checkbox">
+				<label for="checkboxes-<%= i %>">
+					<input type="checkbox" name="checkboxes" id="checkboxes-<%= i %>" value="<%= opt %>">
+					<%= opt %>
+				</label>
+			</div>
+    	<% }); %>
+		<% } else if( property.htmltype && property.htmltype == 'radio' ) { %>
+		<% _.each( property.options, function( opt, i ){ %>
+			<div class="radio">
+				<label for="radios-<%= i %>">
+					<input type="radio" name="radios" id="radios-<%= i %>" value="<%= opt %>">
+					<%= opt %>
+				</label>
+			</div>
+    	<% }); %>
+		<% } else { %>
+			<% if ( property.length >= 500 || property.htmltype == "textarea") { %>
+			<textarea class="form-control" id="<%=property.name%>" name="<%=property.name%>"<% if ( property.placeholder ) { %> placeholder="<%= property.placeholder %>"<% } %>></textarea>
+			<% } else { %>
+			<input id="<%=property.name%>" name="<%=property.name%>" type="text"<% if ( property.placeholder ) { %> placeholder="<%= property.placeholder %>"<% } %> class="form-control input-md">
+			<% } %>
+		<% } %>
+		<% if ( property.help ){ %><span class="help-block"><%=property.help%></span><% } %>
+		</div>
+	</div>
+    <% }); %>
+
+	<input id="submit" type="submit" value="Add / Update" />
+</fieldset>
+
+<script type="text/javascript" src="script.js"></script>

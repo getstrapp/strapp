@@ -1,0 +1,62 @@
+{
+	"_name": "movie",
+	"_key" : {
+		"name" : "movie_id",
+		"type": "int",
+		"length": "11"
+	},
+	"properties" : [
+	  	{
+	  		"name" : "title",
+		    "placeholder": "Movie Title",
+		    "prettyname": "Title",
+	  		"length": 32
+	  	},
+	  	{
+	  		"name" : "runtime",
+		    "placeholder": "Runtime",
+		    "prettyname": "Runtime",
+		    "help": "min",
+	  		"length": 4,
+	  		"type": "int"
+	  	},
+	  	{
+	  		"name":"storyline",
+	  		"prettyname":"Storyline",
+	  		"length": 500,
+	  		"placeholder": "The story"
+	  	},
+	  	{
+	  		"name":"rating",
+	  		"prettyname":"Rating",
+	  		"htmltype": "radio",
+	  		"options": [
+	  			"PG",
+	  			"PG-13",
+	  			"AA",
+	  			"R"
+	  		]
+	  	},
+	  	{
+	  		"name":"genre",
+	  		"prettyname":"Genre",
+	  		"htmltype": "checkbox",
+	  		"options": [
+	  			"Action",
+	  			"Adventure",
+	  			"Sci-Fi",
+	  			"Thriller"
+	  		]
+	  	},
+	  	{
+	  		"name":"director",
+	  		"prettyname":"Director",
+	  		"htmltype": "select",
+	  		"options": [
+	  			"Ridley Scott",
+	  			"Adam Cooper",
+	  			"Bill Collage"
+	  		]
+	  	}
+  	]
+}

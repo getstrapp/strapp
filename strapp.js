@@ -1,58 +1,73 @@
 var fs = require('fs');
 var async = require('async');
-var hb = require('handlebars');
 var _ = require('underscore');
 
-var args = process.argv.slice(2);
-var def = args[0];
-var template = args[1];
+var Strapp = {
+	apply : function( def, templates ) {
 
-if( def == undefined ) {
-	console.log( "Definition undefined!" );
-	process.exit();
-}
-if( template == undefined ) {
-	console.log( "Template undefined!" );
-	process.exit();
-}
+		console.log('strapp 0.1');
 
-console.log('strapp 0.1');
-
-var templates = [{ file: template, type: 'template' }];
-var definition = { file: def };
-
-// Load definition
-fs.readFile(definition.file, "utf-8", function (err,data) {
-	if (err) {
-		console.log( 'File read error! ' + err );
-		process.exit();
-	}
-	definition.data = data;
-	definition.obj = JSON.parse(definition.data);
-	processTemplates( definition, templates );
-});
-
-function processTemplates( definition, templates) {
-	_.each(templates, function(t) {
-		fs.readFile(t.file, "utf-8", function (err,data) {
-			if (err) {
-				return console.log( 'Template read error! ' + err );
+		if( def == undefined ) {
+			return console.log( "Definition undefined!" );
+		}
+		if( templates == undefined ) {
+			return console.log( "Templates undefined!" );
+		}
+		if( typeof templates === 'string' ) {
+		    templates = [ templates ];
+		}
+		var t = [];
+		for( var i = 0; i < templates.length; i++ ) {
+			var template = templates[i];
+			if( typeof template === 'string' ) {
+			    template = { src: templates[i], type: 'template' };
 			}
-			t.data = data;
-			var out = applyTemplate( definition.obj, t );
-			fs.writeFile( t.file + ".out", out, function(err) {
-				if(err) {
-					return console.log(err);
-				}
-				console.log( t.file + ".out generated");
-			}); 
+			t.push(template);
+		}
+		var definition = { src: def };
+
+		// Load definition
+		fs.readFile(definition.src, "utf-8", function (err,data) {
+			if (err) {
+				console.log( 'File read error! ' + err );
+				process.exit();
+			}
+			definition.data = data;
+			definition.obj = JSON.parse(definition.data);
+			Strapp.processTemplates( definition, t );
 		});
-	});
+
+	},
+	processTemplates : function( definition, templates) {
+		_.each(templates, function(t) {
+			fs.readFile(t.src, "utf-8", function (err,data) {
+				if (err) {
+					return console.log( 'Template read error! ' + err );
+				}
+				t.data = data;
+				if( t.dest === undefined ) {
+					t.dest = t.src + ".out";
+				}
+				var out = Strapp.applyTemplate( definition.obj, t );
+				fs.writeFile( t.dest, out, function(err) {
+					if(err) {
+						return console.log(err);
+					}
+					console.log( t.src + " ==> " + t.dest + " generated");
+				}); 
+			});
+		});
+	},
+	applyTemplate : function( definition, t ) {
+		if( t.data == undefined ) return console.log( "Template data is undefined!" );
+		console.log( "applying template to " + t.src );
+		
+		// _.templateSettings = {
+		// 	interpolate: /\{\{(.+?)\}\}/g
+		// };
+		var template = _.template( t.data );
+		return template(definition);
+	}
 }
 
-function applyTemplate( definition, template ) {
-	if( template.data == undefined ) return console.log( "Template data is undefined!" );
-	// console.log( "Applying definition to ", template.file );
-	var template = hb.compile(template.data);
-	return template(definition);
-}
+module.exports = Strapp;

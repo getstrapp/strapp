@@ -1,35 +1,61 @@
 strapp
 ======
 
-Let's make app creation easier
+[Imgur](http://i.imgur.com/AhjBvfg.png)
 
+Strapp is simple. Strapp takes a definition of an object (json) then applies templates (using underscore template) to generate production ready code.
 
-npm install -g strapp
+Example definition.json
 
-strapp install movies-phpmysql
-
-strapp update
-
-strapp
-
-strapp.json
+```js
 {
-  title: "movies-phpmysql",
-  version: "1.0",
-  models: [ {
-    movie: {
-      definition: "movie.json",
-      templates: [ "html", "js" ]
-    }
-  ],
-  templates: [ {
-    html: {
-      definition: "strapptemplates/html.tpl",
-      output: "."
-    },
-    html: {
-      definition: "strapptemplates/js.tpl",
-      output: "scripts/"
-    }
+  "_name": "movie",
+  "_key" : {
+    "name" : "movie_id",
+    "type": "int",
+    "length": "11"
+  },
+  "properties" : [
+      {
+        "name" : "title",
+        "placeholder": "Movie Title",
+        "prettyname": "Title",
+        "length": 32
+      }
   ]
 }
+```
+
+Example template.html
+```html
+<form>
+  <fieldset>
+    <legend><%= _name %></legend>
+    <% _.each( properties, function( property, i ){ %>
+      <label for="<%=property.name%>"><%=property.name%></label>
+      <input id="<%=property.name%>" name="<%=property.name%>" type="text"<% if ( property.placeholder ) { %> placeholder="<%= property.placeholder %>"<% } %> class="form-control input-md">
+    <% }); %>
+  </fieldset>
+</form>
+```
+
+Usage:
+```js
+var Strapp = require("../strapp.js");
+
+Strapp.apply("definition.json", [{ 
+    src: "template.bootstrap-form.html",
+    dest: "out/template.html"
+  },{ 
+    src: "template.script.js",
+    dest: "out/script.js"
+  },{ 
+    src: "template.mysql.createtable.sql",
+    dest: "out/mysql.createtable.sql"
+  }]);
+```
+
+## Try it!
+
+cd example/
+node example.js
