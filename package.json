@@ -1,6 +1,6 @@
 {
   "name": "strapp",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Let's make app creation easier",
   "main": "strapp.js",
   "scripts": {

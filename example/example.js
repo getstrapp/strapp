@@ -1,12 +1,12 @@
 var Strapp = require("../strapp.js");
 
 Strapp.apply("definition.json", [{ 
-		src: "template.bootstrap-form.html",
+		src: "bootstrap.form.html",
 		dest: "out/template.html"
 	},{ 
-		src: "template.script.js",
+		src: "script.js",
 		dest: "out/script.js"
 	},{ 
-		src: "template.mysql.createtable.sql",
+		src: "mysql.createtable.sql",
 		dest: "out/mysql.createtable.sql"
 	}]);

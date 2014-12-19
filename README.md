@@ -26,7 +26,7 @@ Example definition.json
 }
 ```
 
-Example template.html
+### bootstrap.form.html
 ```html
 <form>
   <fieldset>
@@ -39,18 +39,27 @@ Example template.html
 </form>
 ```
 
+### mysql.createtable.sql
+```sql
+CREATE TABLE <%= _name %>
+(
+  <%= _key.name %> <%= _key.type %>(<%= _key.length %>) NOT NULL,
+<% _.each( properties, function( property, i ){ %>
+  <%= property.name %> <% if(property.type) { %><%=property.type%><%}else{%>varchar<%}%>(<% if(property.length) { %><%=property.length%><%}else{%>32<%}%>),
+<% }); %>
+  PRIMARY KEY (<%= _key.name %>)
+);
+```
+
 Usage:
 ```js
 var Strapp = require("../strapp.js");
 
 Strapp.apply("definition.json", [{ 
-    src: "template.bootstrap-form.html",
-    dest: "out/template.html"
+    src: "bootstrap.form.html",
+    dest: "out/form.html"
   },{ 
-    src: "template.script.js",
-    dest: "out/script.js"
-  },{ 
-    src: "template.mysql.createtable.sql",
+    src: "mysql.createtable.sql",
     dest: "out/mysql.createtable.sql"
   }]);
 ```
